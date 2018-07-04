@@ -1,15 +1,46 @@
 import React from 'react';
 import { Page, Navbar, Link, Block, BlockTitle } from 'framework7-react';
 
+var Winterfell = require('winterfell');
+var FW7React = require('framework7-react');
+
+var schema = require('../../ReportV1.schema');
+
+var fw7RadioOptionsInput = require('../formElements/fw7RadioOptionsInput');
+
+Winterfell.addInputType("radioOptionsInput", fw7RadioOptionsInput);
+
+var onRender = () => {
+  console.log('Great news! Winterfell rendered successfully');
+};
+
+var onUpdate = (questionAnswers) => {
+  console.log('Question Updated! The current set of answers is: ', questionAnswers);
+};
+var onSwitchPanel = (panel) => {
+  console.log('Moving on to the panel that is identified as "' + panel.panelId + '"');
+};
+
+var onSubmit = (questionAnswers, target) => {
+  console.log('Form submitted!', questionAnswers);
+  console.log('-----');
+  console.log('For this example, we disabled normal form submission functionality. ');
+  console.log('-----');
+  alert('Submitted. Check the console to see the answers!');
+};
+
+
+
 export default () => (
   <Page>
     <Navbar title="About" backLink="Back"></Navbar>
     <BlockTitle>About My App</BlockTitle>
     <Block strong>
-      <p>Here is About page!</p>
-      <p>You can go <Link back>back</Link>.</p>
-      <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
-      <p>Fusce eros lectus, accumsan eget mi vel, iaculis tincidunt felis. Nulla tincidunt pharetra sagittis. Fusce in felis eros. Nulla sit amet aliquam lorem, et gravida ipsum. Mauris consectetur nisl non sollicitudin tristique. Praesent vitae metus ac quam rhoncus mattis vel et nisi. Aenean aliquet, felis quis dignissim iaculis, lectus quam tincidunt ligula, et venenatis turpis risus sed lorem. Morbi eu metus elit. Ut vel diam dolor.</p>
+    <Winterfell schema={schema}
+        onRender={onRender}
+        onUpdate={onUpdate}
+        renderRequiredAsterisk={() => <span>{'*'}</span>} />
+
     </Block>
   </Page>
 );
